@@ -1,0 +1,40 @@
+{
+  "create_artwork_request": {
+    "shop_id": 1,
+    "style_profile_id": 2,
+    "theme_id": 7,
+    "prompt_text": "Japandi x Zen x wabi-sabi minimal composition, monochrome sumi texture, modern kanji balance, gallery-grade print",
+    "negative_prompt_text": "logo, trademark, brand name, artist name, lowres, deformed text",
+    "model_name": "gpt-image-1",
+    "aspect_ratios": ["4:5", "3:4", "2:3"],
+    "variants": 12
+  },
+  "create_draft_request": {
+    "artwork_id": 101,
+    "title": "Wabi-Sabi Kanji Wall Art, Minimal Japanese Ink Print, Instant Download",
+    "description": "High-resolution digital download for home decor. Includes 2:3, 3:4, 4:5, ISO sizes.",
+    "tags": [
+      "japanese wall art",
+      "wabi sabi print",
+      "zen decor",
+      "kanji poster",
+      "japandi art",
+      "minimal wall decor",
+      "instant download",
+      "neutral home decor",
+      "sumi ink art",
+      "tea room art",
+      "black white poster",
+      "modern asian art",
+      "printable artwork"
+    ],
+    "price": 9.99,
+    "currency": "USD"
+  },
+  "qc_result": {
+    "pass": true,
+    "quality_score": 91.5,
+    "ip_risk_score": 8.0,
+    "issues": []
+  }
+}
