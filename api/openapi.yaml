@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: Etsy AI Poster Automation API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /artworks:
+    post:
+      summary: 作品生成ジョブ作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateArtworkRequest'
+      responses:
+        '202':
+          description: Accepted
+    get:
+      summary: 作品一覧取得
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /artworks/{artworkId}/qc:
+    post:
+      summary: QC実行
+      parameters:
+        - in: path
+          name: artworkId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: QC result
+  /listings/drafts:
+    post:
+      summary: Etsyドラフト作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDraftRequest'
+      responses:
+        '201':
+          description: Draft created
+  /listings/{draftId}/assets:
+    post:
+      summary: 画像・デジタルファイルアップロード
+      parameters:
+        - in: path
+          name: draftId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '202':
+          description: Upload started
+  /listings/{draftId}/approve:
+    post:
+      summary: 人間承認
+      parameters:
+        - in: path
+          name: draftId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Approved
+  /listings/{draftId}/publish:
+    post:
+      summary: 公開実行
+      parameters:
+        - in: path
+          name: draftId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Published
+  /metrics/sync:
+    post:
+      summary: KPI同期
+      responses:
+        '202':
+          description: Metrics sync started
+components:
+  schemas:
+    CreateArtworkRequest:
+      type: object
+      required: [shop_id, style_profile_id, prompt_text, model_name, aspect_ratios]
+      properties:
+        shop_id: { type: integer }
+        style_profile_id: { type: integer }
+        theme_id: { type: integer }
+        prompt_text: { type: string }
+        negative_prompt_text: { type: string }
+        model_name: { type: string }
+        aspect_ratios:
+          type: array
+          items: { type: string }
+        variants: { type: integer, minimum: 1, maximum: 20 }
+    CreateDraftRequest:
+      type: object
+      required: [artwork_id, title, description, tags, price]
+      properties:
+        artwork_id: { type: integer }
+        title: { type: string, maxLength: 140 }
+        description: { type: string }
+        tags:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items: { type: string }
+        price: { type: number }
+        currency: { type: string, default: USD }
